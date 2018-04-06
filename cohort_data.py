@@ -1,5 +1,6 @@
 """Functions to parse a file containing student data."""
 
+
 def unique_houses(filename):
     """TODO: Return a set of student houses.
 
@@ -12,12 +13,12 @@ def unique_houses(filename):
     ["Dumbledore's Army", 'Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin']
 
     """
-    f = open(filename, 'r')
-    houses = set()
-    for line in f.readlines():
-        line_list = line.rstrip().split('|')
-        if line_list[2]:
-            houses.add(line_list[2])
+    with open(filename, 'r') as f:
+        houses = set()
+        for line in f.readlines():
+            line_list = line.rstrip().split('|')
+            if line_list[2]:
+                houses.add(line_list[2])
 
     return houses
 
@@ -190,7 +191,18 @@ def find_name_duplicates(filename):
 
     duplicate_names = set()
 
-    # Code goes here
+    all_students = sort_by_cohort(filename)
+    all_students.pop()
+    print all_students
+
+    for i in range(len(all_students)):
+        for j in range(len(all_students[i])):
+            all_students[i][j] = all_students[i][j].split(' ')[1]
+            print all_students[i][j]
+
+    print all_students
+
+    duplicate_names = reduce(lambda x, y: set(x) & set(y), all_students)
 
     return duplicate_names
 
